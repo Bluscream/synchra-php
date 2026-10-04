@@ -1,0 +1,53 @@
+<?php
+
+/*
+ * This file is generated — do not edit it by hand.
+ *
+ * Source:    spec/openapi.json (and spec/websocket.md for the gateway)
+ * Generator: tools/generate.php
+ *
+ * To pick up an API change: ./tools/fetch-spec.sh && composer generate
+ */
+
+declare(strict_types=1);
+
+namespace Synchra\Model;
+
+use Synchra\Serialization\DataModel;
+use Synchra\Serialization\Reader;
+use Synchra\Serialization\Writer;
+
+/**
+ * The `LiveNotificationEmbedAuthor` schema.
+ */
+final readonly class LiveNotificationEmbedAuthor implements DataModel
+{
+    public function __construct(
+        public string $name,
+        public ?string $url = null,
+        public ?string $icon_url = null,
+    ) {}
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public static function fromArray(array $data): static
+    {
+        $reader = new Reader($data, self::class);
+
+        return new self(
+            name: $reader->requiredString('name'),
+            url: $reader->optionalString('url'),
+            icon_url: $reader->optionalString('icon_url'),
+        );
+    }
+
+    public function jsonSerialize(): array
+    {
+        return Writer::payload([
+            'name' => [$this->name, true],
+            'url' => [$this->url, true],
+            'icon_url' => [$this->icon_url, true],
+        ]);
+    }
+}
