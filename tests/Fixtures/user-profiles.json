@@ -1,0 +1,112 @@
+{
+  "records": [
+    {
+      "id": "a5e18bb2-965f-775b-abfb-f5b3ed11772c",
+      "user_id": "1b535211-d5a1-7393-a0fa-ec9a4e1784b1",
+      "type": "chat",
+      "name": "example_53b5bb1a",
+      "sort_order": "1024.0000000000",
+      "data": {
+        "show_timestamp": true,
+        "show_provider_logo": true,
+        "provider_logo_display": "default",
+        "show_badges": true,
+        "hide_badges": [],
+        "show_mod_icons": false,
+        "show_username": true,
+        "show_first_time_chatter": true,
+        "show_returning_chatter": true,
+        "show_source_channel": true,
+        "show_chat_input": true,
+        "show_chat_events": true,
+        "highlight_chat_mentions": true,
+        "show_message_dividers": false,
+        "striped_message_background": true,
+        "notification_sound": false,
+        "notification_sound_tone": "chime",
+        "notification_sound_volume": 50,
+        "notification_sound_cooldown_ms": 800,
+        "notification_sound_url": "",
+        "notification_filters": {
+          "mentions_me": {
+            "mode": "all"
+          },
+          "viewer_names": {
+            "mode": "all",
+            "values": []
+          },
+          "access_levels": {
+            "mode": "all",
+            "values": []
+          },
+          "providers": {
+            "mode": "all",
+            "values": []
+          },
+          "message_types": {
+            "mode": "all",
+            "values": []
+          },
+          "keywords": {
+            "mode": "all",
+            "values": []
+          },
+          "chatter_types": {
+            "mode": "all",
+            "values": []
+          },
+          "has_links": {
+            "mode": "all"
+          },
+          "has_replies": {
+            "mode": "all"
+          },
+          "deleted_messages": {
+            "mode": "all"
+          }
+        },
+        "size": "md",
+        "filters": {
+          "mentions_me": {
+            "mode": "all"
+          },
+          "viewer_names": {
+            "mode": "all",
+            "values": []
+          },
+          "access_levels": {
+            "mode": "all",
+            "values": []
+          },
+          "providers": {
+            "mode": "all",
+            "values": []
+          },
+          "message_types": {
+            "mode": "all",
+            "values": []
+          },
+          "keywords": {
+            "mode": "all",
+            "values": []
+          },
+          "chatter_types": {
+            "mode": "all",
+            "values": []
+          },
+          "has_links": {
+            "mode": "all"
+          },
+          "has_replies": {
+            "mode": "all"
+          },
+          "deleted_messages": {
+            "mode": "all"
+          }
+        }
+      },
+      "created_at": "2026-06-15T17:34:23.736270",
+      "updated_at": "2026-06-15T17:35:10.054092"
+    }
+  ]
+}

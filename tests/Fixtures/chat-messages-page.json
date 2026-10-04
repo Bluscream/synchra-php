@@ -1,0 +1,107 @@
+{
+  "records": [
+    {
+      "id": "5bf4235e-3ae3-7cad-ada1-6b2678d36ee1",
+      "type": "message",
+      "sub_type": null,
+      "created_at": "2026-10-04T19:31:44.355000Z",
+      "updated_at": "2026-10-04T19:31:44.355000Z",
+      "channel_id": "d1e7810e-6c1b-7d1c-a416-dffe9afc45c8",
+      "outgoing_group_id": null,
+      "channel_provider_chat_id": null,
+      "channel_provider_stream_id": null,
+      "provider_logo_variant": null,
+      "provider": "tiktok",
+      "provider_channel_id": "pid_afee5cb0",
+      "provider_message_id": "pid_66525370",
+      "provider_viewer_id": "pid_a733d27c",
+      "viewer_name": "example_defb97a4",
+      "viewer_display_name": "example_73af6f4b",
+      "viewer_profile_picture_url": "https://example.invalid/placeholder.png",
+      "viewer_created_at": null,
+      "viewer_color": "#40c057",
+      "message_parts": [
+        {
+          "type": "text",
+          "text": "Example text."
+        }
+      ],
+      "badges": [
+        {
+          "id": "user-grade",
+          "type": "user-grade",
+          "name": "example_360ee037",
+          "urls": {
+            "sm": "https://example.invalid/placeholder.png",
+            "md": "https://example.invalid/placeholder.png",
+            "lg": "https://example.invalid/placeholder.png"
+          }
+        }
+      ],
+      "access_level": 0,
+      "notice_message_parts": [],
+      "source_provider_channel_id": null,
+      "source_provider_channel_name": null,
+      "source_provider_channel_display_name": null,
+      "deleted_at": null,
+      "deleted_by_provider_viewer_id": null,
+      "deleted_by_name": null,
+      "deleted_by_display_name": null,
+      "parent_provider_thread_id": null,
+      "parent": null
+    },
+    {
+      "id": "1b3dbc71-8e2a-74dc-a60a-ba0b6034af0a",
+      "type": "message",
+      "sub_type": null,
+      "created_at": "2026-10-04T19:30:19.809000Z",
+      "updated_at": "2026-10-04T19:30:19.809000Z",
+      "channel_id": "d1e7810e-6c1b-7d1c-a416-dffe9afc45c8",
+      "outgoing_group_id": null,
+      "channel_provider_chat_id": null,
+      "channel_provider_stream_id": null,
+      "provider_logo_variant": null,
+      "provider": "tiktok",
+      "provider_channel_id": "pid_afee5cb0",
+      "provider_message_id": "pid_caaa68c3",
+      "provider_viewer_id": "pid_a56ba727",
+      "viewer_name": "example_ad7d6dc3",
+      "viewer_display_name": "example_275145d6",
+      "viewer_profile_picture_url": "https://example.invalid/placeholder.png",
+      "viewer_created_at": null,
+      "viewer_color": "#8B58FF",
+      "message_parts": [
+        {
+          "type": "text",
+          "text": "Example text."
+        }
+      ],
+      "badges": [
+        {
+          "id": "fans",
+          "type": "fans",
+          "name": "example_d4ae42cb",
+          "urls": {
+            "sm": "https://example.invalid/placeholder.png",
+            "md": "https://example.invalid/placeholder.png",
+            "lg": "https://example.invalid/placeholder.png"
+          }
+        }
+      ],
+      "access_level": 0,
+      "notice_message_parts": [],
+      "source_provider_channel_id": null,
+      "source_provider_channel_name": null,
+      "source_provider_channel_display_name": null,
+      "deleted_at": null,
+      "deleted_by_provider_viewer_id": null,
+      "deleted_by_name": null,
+      "deleted_by_display_name": null,
+      "parent_provider_thread_id": null,
+      "parent": null
+    }
+  ],
+  "lookup_data": {},
+  "cursor": "PmR0OjIwMjYtMTAtMDQgMTg6MjA6MDAuNDMzMDAwKzAwOjAw",
+  "total": null
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "eee9d69e-c7ca-79a9-a486-15a5727e3460",
+    "provider": "twitch",
+    "provider_channel_id": "pid_dd9e8df8",
+    "display_name": "example_61093b75",
+    "scope": "channel:manage:moderators moderator:manage:automod moderator:manage:unban_requests channel:moderate moderator:manage:shield_mode moderator:manage:shoutouts moderator:manage:announcements moderator:manage:warnings moderator:manage:blocked_terms channel:manage:raids user:read:emotes user:write:chat moderator:manage:chat_settings moderator:manage:chat_messages channel:manage:vips moderator:manage:banned_users channel:manage:polls channel:manage:predictions user:read:chat",
+    "chat_scope_needed": false
+  },
+  {
+    "id": "c0f00c55-c37e-7df7-ab99-7267ad659be2",
+    "provider": "youtube",
+    "provider_channel_id": "pid_f61cc9df",
+    "display_name": "example_9c18c200",
+    "scope": "https://example.invalid/placeholder.png",
+    "chat_scope_needed": false
+  }
+]

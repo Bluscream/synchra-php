@@ -1,0 +1,38 @@
+{
+  "records": [
+    {
+      "id": "17328777-07fc-71bf-a369-4f46ef37cc4f",
+      "display_name": "example_9efdc11c",
+      "created_at": "2026-04-22T16:52:14.270481Z",
+      "plan": {
+        "key": "free",
+        "name": "example_f411a1fb",
+        "features": [],
+        "limits": {
+          "file_storage_bytes": 52428800,
+          "kv_storage_bytes": 524288,
+          "channel_links": 1,
+          "channel_widgets": 3,
+          "channel_timers": 1,
+          "channel_filters": 1,
+          "channel_commands": 15,
+          "obs_remotes": 1,
+          "channel_live_notifications": 1
+        }
+      },
+      "show_on_landing_page": false,
+      "user_access_level": {
+        "id": "eceaa736-2be9-73f1-a2bb-41c2f8c58ada",
+        "user_id": "1b535211-d5a1-7393-a0fa-ec9a4e1784b1",
+        "channel_id": "17328777-07fc-71bf-a369-4f46ef37cc4f",
+        "access_level": 500
+      },
+      "channel_providers": null,
+      "channel_provider_streams": null,
+      "subscription": null
+    }
+  ],
+  "lookup_data": {},
+  "cursor": null,
+  "total": 1
+}

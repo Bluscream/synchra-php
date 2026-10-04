@@ -1,0 +1,6 @@
+{
+  "code": 400,
+  "message": "No YouTube stream chat assigned, create a broadcast first",
+  "type": "no_youtube_stream_chat",
+  "errors": []
+}

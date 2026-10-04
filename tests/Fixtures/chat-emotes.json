@@ -1,0 +1,98 @@
+[
+  {
+    "urls": {
+      "sm": "https://example.invalid/placeholder.png",
+      "md": "https://example.invalid/placeholder.png",
+      "lg": "https://example.invalid/placeholder.png"
+    },
+    "id": "301544927",
+    "name": "example_6efee60c",
+    "animated": false,
+    "emote_provider": "twitch",
+    "group": "twofactor"
+  },
+  {
+    "urls": {
+      "sm": "https://example.invalid/placeholder.png",
+      "md": "https://example.invalid/placeholder.png",
+      "lg": "https://example.invalid/placeholder.png"
+    },
+    "id": "301544926",
+    "name": "example_4b3b3c88",
+    "animated": false,
+    "emote_provider": "twitch",
+    "group": "twofactor"
+  },
+  {
+    "urls": {
+      "sm": "https://example.invalid/placeholder.png",
+      "md": "https://example.invalid/placeholder.png",
+      "lg": "https://example.invalid/placeholder.png"
+    },
+    "id": "301544924",
+    "name": "example_f5e9e4f4",
+    "animated": false,
+    "emote_provider": "twitch",
+    "group": "twofactor"
+  },
+  {
+    "urls": {
+      "sm": "https://example.invalid/placeholder.png",
+      "md": "https://example.invalid/placeholder.png",
+      "lg": "https://example.invalid/placeholder.png"
+    },
+    "id": "301544923",
+    "name": "example_8c47af07",
+    "animated": false,
+    "emote_provider": "twitch",
+    "group": "twofactor"
+  },
+  {
+    "urls": {
+      "sm": "https://example.invalid/placeholder.png",
+      "md": "https://example.invalid/placeholder.png",
+      "lg": "https://example.invalid/placeholder.png"
+    },
+    "id": "301544922",
+    "name": "example_4cbe46a1",
+    "animated": false,
+    "emote_provider": "twitch",
+    "group": "twofactor"
+  },
+  {
+    "urls": {
+      "sm": "https://example.invalid/placeholder.png",
+      "md": "https://example.invalid/placeholder.png",
+      "lg": "https://example.invalid/placeholder.png"
+    },
+    "id": "301544919",
+    "name": "example_4ca67b7b",
+    "animated": false,
+    "emote_provider": "twitch",
+    "group": "twofactor"
+  },
+  {
+    "urls": {
+      "sm": "https://example.invalid/placeholder.png",
+      "md": "https://example.invalid/placeholder.png",
+      "lg": "https://example.invalid/placeholder.png"
+    },
+    "id": "304836436",
+    "name": "example_98b20f7c",
+    "animated": false,
+    "emote_provider": "twitch",
+    "group": "limitedtime"
+  },
+  {
+    "urls": {
+      "sm": "https://example.invalid/placeholder.png",
+      "md": "https://example.invalid/placeholder.png",
+      "lg": "https://example.invalid/placeholder.png"
+    },
+    "id": "303975459",
+    "name": "example_0a33b1d3",
+    "animated": false,
+    "emote_provider": "twitch",
+    "group": "limitedtime"
+  }
+]

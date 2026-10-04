@@ -1,0 +1,63 @@
+[
+  {
+    "id": "7e00bb0c-3008-7616-a984-3bbb0e59a6dc",
+    "channel_id": "44f5f9ed-5eae-716c-a20d-e23e35ccdc06",
+    "provider": "twitch",
+    "provider_channel_id": "pid_dd9e8df8",
+    "provider_channel_name": "example_ce02a9fe",
+    "provider_channel_display_name": "example_61093b75",
+    "state": null,
+    "scope_needed": false,
+    "bot_provider": null
+  },
+  {
+    "id": "2cef47c2-0744-793e-a507-dd3571278143",
+    "channel_id": "44f5f9ed-5eae-716c-a20d-e23e35ccdc06",
+    "provider": "youtube",
+    "provider_channel_id": "pid_f61cc9df",
+    "provider_channel_name": "example_ce02a9fe",
+    "provider_channel_display_name": "example_9c18c200",
+    "state": {
+      "subscribers_last_checked_at": "2026-10-01T10:48:25.594389+00:00"
+    },
+    "scope_needed": false,
+    "bot_provider": null
+  },
+  {
+    "id": "a4baa35e-c954-7ca6-a90c-3112f51e0db9",
+    "channel_id": "44f5f9ed-5eae-716c-a20d-e23e35ccdc06",
+    "provider": "tiktok",
+    "provider_channel_id": "pid_6c0f10a1",
+    "provider_channel_name": "example_6c0f10a1",
+    "provider_channel_display_name": "example_6c0f10a1",
+    "state": null,
+    "scope_needed": false,
+    "bot_provider": null
+  },
+  {
+    "id": "cbae5f30-3a48-7a90-a87e-6290189f4f94",
+    "channel_id": "44f5f9ed-5eae-716c-a20d-e23e35ccdc06",
+    "provider": "youtube",
+    "provider_channel_id": "pid_346d38e3",
+    "provider_channel_name": "example_a9b5fada",
+    "provider_channel_display_name": "example_a346cf70",
+    "state": {
+      "subscribers_last_checked_at": "2026-10-01T10:48:25.595633+00:00"
+    },
+    "scope_needed": false,
+    "bot_provider": null
+  },
+  {
+    "id": "9c97332a-052a-7dd7-a76c-1dc8a700ea31",
+    "channel_id": "44f5f9ed-5eae-716c-a20d-e23e35ccdc06",
+    "provider": "youtube",
+    "provider_channel_id": "pid_23648886",
+    "provider_channel_name": "example_83e34289",
+    "provider_channel_display_name": "example_86f73da2",
+    "state": {
+      "subscribers_last_checked_at": "2026-09-08T12:48:21.183272+00:00"
+    },
+    "scope_needed": true,
+    "bot_provider": null
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "records": [
+    {
+      "id": "ad35246f-fea0-79ac-acfb-dbf69a41760f",
+      "channel_id": "d1e7810e-6c1b-7d1c-a416-dffe9afc45c8",
+      "channel_provider_id": "ea5257fc-3c89-7c65-a2c9-02e6732cd86e",
+      "channel_stream_id": null,
+      "provider": "twitch",
+      "provider_channel_id": "pid_609b32fd",
+      "provider_stream_id": null,
+      "title": "VR und Chill mit dem Otter",
+      "category": "GAME",
+      "tags": [
+        "Deutsch",
+        "vrchatfurry",
+        "vrchat",
+        "vrchatstreamer",
+        "gaming",
+        "ohana",
+        "OhanaFamily",
+        "Otter"
+      ],
+      "viewer_count": null,
+      "variant_label": null,
+      "provider_logo_variant": null,
+      "status": "pending",
+      "started_at": null,
+      "ended_at": null,
+      "avg_viewer_count": null,
+      "peak_viewer_count": null,
+      "viewer_watched_minutes": null,
+      "chat_message_count": null,
+      "unique_chatter_count": null
+    }
+  ],
+  "lookup_data": {},
+  "cursor": null,
+  "total": null
+}
