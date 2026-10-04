@@ -292,6 +292,39 @@ one bad handler cannot take the stream down.
 
 ---
 
+## Rendering chat (emotes, gifts, mentions, badges)
+
+Synchra resolves rich content server-side. A chat message or an activity arrives as an ordered list
+of typed `message_parts`: an `emote` carries its CDN urls at three sizes (`sm`/`md`/`lg`), a `gift`
+an image url, a `mention` the resolved display name, a `link` its url. A message also carries
+`badges` (subscriber, moderator, VIP, …) with their own icon urls. Nothing needs a second lookup.
+
+`MessageContent` collapses that into render-ready pieces so you draw the images rather than the
+names — the difference between showing `KPOPvictory` and showing the emote:
+
+```php
+use Synchra\Presentation\MessageContent;
+use Synchra\Presentation\Segment;
+
+foreach (MessageContent::segments($message->message_parts) as $segment) {
+    echo match ($segment->kind) {
+        Segment::KIND_EMOTE, Segment::KIND_GIFT => "<img src=\"{$segment->imageUrl}\" alt=\"{$segment->text}\">",
+        Segment::KIND_LINK                       => "<a href=\"{$segment->href}\">{$segment->text}</a>",
+        default                                  => htmlspecialchars($segment->text),
+    };
+}
+
+MessageContent::badges($message->badges);          // list<Badge> {name, type, imageUrl}
+MessageContent::plainText($message->message_parts); // the text-only fallback
+```
+
+Each `Segment` always has a `text` fallback, so a renderer that ignores images still reads
+correctly. It returns data, not HTML, so the same helper works for a page, a terminal or a desktop
+app. `examples/04-render-chat.php` is a complete HTML renderer; it needs no token, because chat is
+public.
+
+---
+
 ## Errors
 
 Every non-2xx response becomes a typed exception carrying the API's own error envelope:

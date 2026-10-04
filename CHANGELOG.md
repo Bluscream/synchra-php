@@ -9,6 +9,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **`Synchra\Presentation\MessageContent`** — resolves a chat message's or activity's rich content
+  into drawable pieces. Synchra pre-resolves emotes, gifts, mentions, links and viewer badges
+  server-side (an emote arrives carrying its CDN urls at three sizes), and this collapses the typed
+  parts into an ordered list of `Segment`s plus a list of `Badge`s so a caller can render the images
+  instead of the bare names — the difference between showing `KPOPvictory` and showing the emote. It
+  returns data, not HTML, so it is the same helper for a web page, a terminal or a desktop app.
+  `examples/04-render-chat.php` renders chat to HTML with it.
 - **`Synchra::anonymous()`** — a client that sends no credentials, for the public read endpoints: a
   channel's providers, provider-streams (live state, titles, viewer counts), chat messages and
   chat-events, plus the global reference lists (currencies, activity types, stream categories,
