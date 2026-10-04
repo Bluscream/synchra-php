@@ -80,6 +80,21 @@ final class Synchra
     }
 
     /**
+     * Builds a client that sends no credentials.
+     *
+     * A subset of the API is public and answers without a token — a channel's linked providers,
+     * its provider-streams (live state, titles and viewer counts), its chat messages, and the
+     * global reference lists such as currencies and activity types. Those calls succeed on this
+     * client; anything that needs a scope answers 401 and surfaces as an
+     * {@see \Synchra\Exception\AuthenticationException}. This is the same as `withToken(null)`,
+     * named so the intent reads at the call site.
+     */
+    public static function anonymous(?ClientOptions $options = null): self
+    {
+        return new self(new StaticToken(null), $options ?? new ClientOptions());
+    }
+
+    /**
      * The HTTP client every endpoint group shares.
      */
     public function api(): ApiClient

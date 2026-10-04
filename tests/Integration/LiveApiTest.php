@@ -127,6 +127,67 @@ final class LiveApiTest extends TestCase
         self::assertLessThanOrEqual(self::PER_PAGE, $page->count());
     }
 
+    /**
+     * A channel id to exercise the public endpoints against, or a skip.
+     *
+     * Unlike the rest of the suite this does not need a token — it needs a channel to read, which
+     * comes from `SYNCHRA_PUBLIC_CHANNEL_ID`.
+     */
+    private function publicChannelId(): string
+    {
+        $id = \getenv('SYNCHRA_PUBLIC_CHANNEL_ID');
+
+        if (!\is_string($id) || \trim($id) === '') {
+            self::markTestSkipped('Set SYNCHRA_PUBLIC_CHANNEL_ID to run the anonymous read tests.');
+        }
+
+        return \trim($id);
+    }
+
+    public function testAnonymousReferenceListsAreReadable(): void
+    {
+        // No token, no channel — the global lists are public outright.
+        self::assertNotEmpty(Synchra::anonymous()->channelActivity()->activityTypes());
+    }
+
+    public function testAnonymousCanReadProvidersAndStreams(): void
+    {
+        $channelId = $this->publicChannelId();
+        $synchra = Synchra::anonymous();
+
+        foreach ($synchra->channelProvider()->getChannelProviders($channelId) as $provider) {
+            self::assertNotSame('', $provider->id);
+        }
+
+        // provider-streams carries the live state, titles and viewer counts the overlay needs, and
+        // it answers without a token where the authenticated /streams does not.
+        $streams = $synchra->channelProvider()->getChannelProviderStreams($channelId);
+
+        self::assertLessThanOrEqual(
+            $streams->total ?? \PHP_INT_MAX,
+            $streams->count(),
+        );
+    }
+
+    public function testAnonymousChatIsReadable(): void
+    {
+        $page = Synchra::anonymous()->chat()->getChatMessages(
+            $this->publicChannelId(),
+            new \Synchra\Query\ChatMessagesQuery(per_page: self::PER_PAGE),
+        );
+
+        self::assertLessThanOrEqual(self::PER_PAGE, $page->count());
+    }
+
+    public function testAnonymousAccessToATokenOnlyEndpointIs401(): void
+    {
+        // The channel record itself is not public; without a token it must be a clean 401 rather
+        // than an empty body or a 500.
+        $this->expectException(AuthenticationException::class);
+
+        Synchra::anonymous()->channel()->getChannel($this->publicChannelId());
+    }
+
     public function testAnInvalidTokenIsReportedAsAnAuthenticationFailure(): void
     {
         // Confirms the real 401 envelope still maps the way the unit tests assume it does.

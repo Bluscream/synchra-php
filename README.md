@@ -94,6 +94,28 @@ $synchra = Synchra::fromEnvironment();
 $synchra = new Synchra(CallableToken::of(fn (): ?string => $vault->current('synchra')));
 ```
 
+### Anonymous access
+
+Part of the API is public and answers without a token. For a bio page or an overlay that only
+shows live state and chat, that is all you need:
+
+```php
+$synchra = Synchra::anonymous();
+
+// Linked platforms, live state with viewer counts, and chat — no token involved.
+$providers = $synchra->channelProvider()->getChannelProviders($channelId);
+$streams   = $synchra->channelProvider()->getChannelProviderStreams($channelId);
+$chat      = $synchra->chat()->getChatMessages($channelId);
+```
+
+Verified public on the live API: a channel's `providers`, `provider-streams` (status, title,
+`viewer_count`, `peak_viewer_count`, `started_at`), `chat-messages`, `chat-events`,
+`random-chat-messages`, and the global reference lists — `currencies.json`, `activity-types`,
+`stream-categories`, `subscription/plans`, `link-tracking/config`. The channel record itself,
+`streams`, `activities`, `links`, `widgets` and everything that writes need a token; an anonymous
+call to one answers 401 as an `AuthenticationException`. A widget's own endpoints are public too,
+but keyed by a `widget_id` that acts as the capability — pass it as the path parameter.
+
 Tokens carry a fixed scope set, and the API rejects a call whose scope the token does not hold, so a
 narrow token fails loudly rather than quietly doing less. Each generated method's docblock names the
 scope it needs. The full set the API uses:

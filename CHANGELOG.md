@@ -7,6 +7,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- **`Synchra::anonymous()`** — a client that sends no credentials, for the public read endpoints: a
+  channel's providers, provider-streams (live state, titles, viewer counts), chat messages and
+  chat-events, plus the global reference lists (currencies, activity types, stream categories,
+  subscription plans, link-tracking config). The README's _Anonymous access_ section lists what is
+  and is not public, verified against the live API. `withToken(null)` already behaved this way; the
+  factory names the intent.
+- Live integration tests for the anonymous path, gated on `SYNCHRA_PUBLIC_CHANNEL_ID` rather than a
+  token, including that a token-only endpoint still answers 401 anonymously.
+
 ## [0.1.0] — 2026-10-05
 
 First release. Complete coverage of the Synchra API v2 as described by
