@@ -1,0 +1,101 @@
+name: CI
+
+# Disabled: workflows do not run under this account; uncomment if you fork this repository.
+#
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+#   schedule:
+#     # Catch the API drifting away from the vendored description.
+#     - cron: '0 6 * * 1'
+
+on:
+  workflow_dispatch:
+    inputs:
+      php-version:
+        description: 'PHP version to run the gate on'
+        required: false
+        default: '8.2'
+        type: choice
+        options:
+          - '8.2'
+          - '8.3'
+          - '8.4'
+      run-live-suite:
+        description: 'Also run the read-only live suite (needs the SYNCHRA_TOKEN secret)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: PHP ${{ inputs.php-version || '8.2' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php-version || '8.2' }}
+          extensions: json, mbstring
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Check formatting
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+      - name: Analyse
+        run: vendor/bin/phpstan analyse --no-progress
+
+      - name: Test
+        run: vendor/bin/phpunit --testsuite unit
+
+      # Read-only, and skips itself when the secret is absent.
+      - name: Test against the live API
+        if: ${{ inputs.run-live-suite }}
+        env:
+          SYNCHRA_TOKEN: ${{ secrets.SYNCHRA_TOKEN }}
+        run: vendor/bin/phpunit --testsuite live
+
+  spec-drift:
+    name: Spec drift
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: json, mbstring
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Fetch the current description
+        run: ./tools/fetch-spec.sh
+
+      - name: Regenerate
+        run: composer generate
+
+      - name: Report what changed
+        run: |
+          if git diff --quiet; then
+            echo "The SDK is in step with the live API."
+          else
+            echo "::warning::The live API has moved on; regenerate and commit."
+            git --no-pager diff --stat
+          fi
