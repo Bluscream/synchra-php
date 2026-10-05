@@ -323,6 +323,53 @@ correctly. It returns data, not HTML, so the same helper works for a page, a ter
 app. `examples/04-render-chat.php` is a complete HTML renderer; it needs no token, because chat is
 public.
 
+### Viewer avatars
+
+The one thing a message does **not** reliably carry is the viewer's picture. Synchra fills
+`viewer_profile_picture_url` for some providers and leaves it null for others — a TikTok message
+arrives with one, a Twitch or YouTube message does not — so a chat log rendered straight from the
+API shows avatars for some people and blanks for the rest.
+
+The picture does exist; `GET /channels/{id}/viewers/{provider}/{id}/info` has it for every provider.
+That is one request per viewer, which is why it is opt-in rather than something `MessageContent`
+does for you:
+
+```php
+use Synchra\Presentation\SynchraAvatarSource;
+use Synchra\Presentation\ViewerAvatars;
+
+$avatars = new ViewerAvatars([new SynchraAvatarSource($synchra, $channelId)]);
+
+$byMessageId = $avatars->forMessages($messages);   // array<string, string>, absent = no picture
+```
+
+Answers are cached per **viewer**, not per message, so somebody talking twenty times costs one
+lookup — and "this viewer has no picture" is cached too, or every refresh would retry everyone who
+has not set one. Each `forMessages()` call also only looks up a few viewers it has never seen
+(`lookupsPerBatch`, default 6), so a cold start is spread over several refreshes instead of turning
+one page view into forty requests. Pass your application's own cache as the `AvatarStore` — the
+default `InMemoryAvatarStore` only lives as long as the process, which is no use to a web page
+serving one request per visitor.
+
+`SynchraAvatarSource` needs a token that can read the channel's viewers; without that the endpoint
+answers `403` and you get no avatars. If that is not available, `HttpAvatarSource` asks a service you
+name instead, with nothing built in — the library never contacts a third party you did not configure:
+
+```php
+new HttpAvatarSource(
+    templates: [
+        'twitch'  => 'https://decapi.me/twitch/avatar/{name}',   // answers with the url as text
+        'youtube' => 'https://www.youtube.com/channel/{id}',     // answers with a page
+    ],
+    patterns: ['youtube' => '#"avatar":\{"thumbnails":\[\{"url":"([^"]+)"#'],
+);
+```
+
+The lookup runs where your code runs, and what it returns is the platform's own CDN url, so a page
+built from this sends its visitors to `static-cdn.jtvnw.net` rather than to the service in the
+middle. That service does see your requests — one per viewer per cache lifetime — which is the trade
+you are making by configuring one.
+
 ---
 
 ## Errors

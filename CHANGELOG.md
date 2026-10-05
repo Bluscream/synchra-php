@@ -7,6 +7,26 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-10-05
+
+### Added
+
+- **`Synchra\Presentation\ViewerAvatars`** — fills in the viewer avatars a chat message does not
+  carry. Synchra sets `viewer_profile_picture_url` for some providers and not others: a TikTok
+  message arrives with a picture, a Twitch or YouTube one arrives with null, so a chat log rendered
+  straight from the API shows avatars for some people and blanks for the rest. The picture does
+  exist — `GET /channels/{id}/viewers/{provider}/{id}/info` has it for every provider — but that is
+  one request per viewer, so this is opt-in: nothing happens unless you construct it. Answers are
+  cached per viewer rather than per message (including "this viewer has none", so a miss is not
+  retried every refresh) and each batch only looks up so many new viewers, which keeps a cold start
+  off a single page view.
+  - `AvatarSource` — where a lookup goes. `SynchraAvatarSource` asks Synchra and is the one to
+    prefer; `HttpAvatarSource` asks a service you name, for when the token cannot read the channel's
+    viewers. Nothing is built in, so the library never contacts a third party you did not configure.
+  - `AvatarStore` — where answers are kept, with `InMemoryAvatarStore` as the default. A web
+    application should pass the cache it already has; expiry is the store's business, so it can hold
+    a hit for a day and a miss for half an hour.
+
 ## [0.2.0] — 2026-10-05
 
 ### Added
@@ -68,5 +88,5 @@ First release. Complete coverage of the Synchra API v2 as described by
 - Model properties use the API's own `snake_case` names. See **Deliberate tradeoffs** in the README
   for this and the other decisions that might look like oversights.
 
-[Unreleased]: https://github.com/Bluscream/synchra-php/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Bluscream/synchra-php/compare/v0.3.0...HEAD
 [0.1.0]: https://github.com/Bluscream/synchra-php/releases/tag/v0.1.0
