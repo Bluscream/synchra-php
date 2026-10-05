@@ -13,6 +13,7 @@ use Synchra\Presentation\HttpAvatarSource;
 use Synchra\Presentation\InMemoryAvatarStore;
 use Synchra\Presentation\ViewerAvatars;
 use Synchra\Tests\Support\FakeTransport;
+use Synchra\Tests\Support\Messages;
 
 #[CoversClass(ViewerAvatars::class)]
 #[CoversClass(InMemoryAvatarStore::class)]
@@ -232,39 +233,13 @@ final class ViewerAvatarsTest extends TestCase
         string $viewerName,
         ?string $avatar,
     ): ChatMessage {
-        return ChatMessage::fromArray([
+        return Messages::chat([
             'id' => $id,
-            'type' => 'message',
-            'sub_type' => null,
-            'created_at' => '2026-10-05T12:00:00Z',
-            'updated_at' => null,
-            'channel_id' => 'channel',
-            'outgoing_group_id' => null,
-            'channel_provider_chat_id' => null,
-            'channel_provider_stream_id' => null,
-            'provider_logo_variant' => null,
             'provider' => $provider->value,
-            'provider_channel_id' => 'pc',
-            'provider_message_id' => 'pm-' . $id,
             'provider_viewer_id' => $viewerId,
             'viewer_name' => $viewerName,
             'viewer_display_name' => $viewerName,
             'viewer_profile_picture_url' => $avatar,
-            'viewer_created_at' => null,
-            'viewer_color' => null,
-            'message_parts' => [],
-            'badges' => [],
-            'access_level' => 0,
-            'notice_message_parts' => [],
-            'source_provider_channel_id' => null,
-            'source_provider_channel_name' => null,
-            'source_provider_channel_display_name' => null,
-            'deleted_at' => null,
-            'deleted_by_provider_viewer_id' => null,
-            'deleted_by_name' => null,
-            'deleted_by_display_name' => null,
-            'parent_provider_thread_id' => null,
-            'parent' => null,
         ]);
     }
 }

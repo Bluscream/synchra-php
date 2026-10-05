@@ -7,6 +7,28 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-10-05
+
+### Added
+
+- **`MessageContent::contentParts()` and `MessageContent::isNotice()`** — a chat message puts its
+  content in `message_parts` except when it is a notice, which puts everything in
+  `notice_message_parts` and leaves `message_parts` empty. A TikTok gift is the common case, and a
+  renderer reading only `message_parts` draws every one of them as a blank row: on a live channel
+  that was 35 of 200 messages silently disappearing. `contentParts()` returns whichever list carries
+  the content.
+- **`Synchra\Presentation\ProfileUrl`** — a viewer's public profile url on the platform they wrote
+  from. The API identifies a viewer by handle and provider id and carries no public url, so a chat
+  log that wants to link a name has to build one; this is that mapping in one place, including that
+  YouTube goes by channel id while everyone else goes by handle. A provider that is not somewhere
+  people have profiles (an emote host, a TTS voice) answers null rather than a guess.
+
+### Changed
+
+- A gift segment's `text` is now the gift's own name (`Popular Vote`) rather than the part's count
+  text (`1 diamond`). That string is the image's alt text and the fallback for a renderer that draws
+  no images, and the name is what the image actually shows.
+
 ## [0.3.0] — 2026-10-05
 
 ### Added
@@ -88,5 +110,5 @@ First release. Complete coverage of the Synchra API v2 as described by
 - Model properties use the API's own `snake_case` names. See **Deliberate tradeoffs** in the README
   for this and the other decisions that might look like oversights.
 
-[Unreleased]: https://github.com/Bluscream/synchra-php/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/Bluscream/synchra-php/compare/v0.4.0...HEAD
 [0.1.0]: https://github.com/Bluscream/synchra-php/releases/tag/v0.1.0

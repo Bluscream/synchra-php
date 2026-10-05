@@ -323,6 +323,31 @@ correctly. It returns data, not HTML, so the same helper works for a page, a ter
 app. `examples/04-render-chat.php` is a complete HTML renderer; it needs no token, because chat is
 public.
 
+### Notices, and why a chat log goes blank
+
+A message puts its content in `message_parts` — unless it is a *notice*, which puts everything in
+`notice_message_parts` and leaves `message_parts` empty. A TikTok gift is the usual one: `type:
+notice`, `sub_type: tiktok_gift`, the gift and its image in the notice parts. Reading only
+`message_parts` renders every one of those as an empty row, so use `contentParts()`:
+
+```php
+MessageContent::segments(MessageContent::contentParts($message));
+MessageContent::isNotice($message);   // true for a gift, a sub, a raid — worth styling apart
+```
+
+### Linking a viewer's name
+
+The API identifies a viewer by handle and provider id and carries no public profile url, so
+`ProfileUrl` builds one:
+
+```php
+ProfileUrl::forMessage($message);              // null where the platform has no public profile
+ProfileUrl::for(Provider::Twitch, 'someone');
+```
+
+YouTube is addressed by channel id and everyone else by handle, which is the whole reason this is
+not a one-liner at the call site.
+
 ### Viewer avatars
 
 The one thing a message does **not** reliably carry is the viewer's picture. Synchra fills

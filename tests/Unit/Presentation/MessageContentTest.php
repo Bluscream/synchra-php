@@ -11,6 +11,7 @@ use Synchra\Model\ChatMessagePart;
 use Synchra\Presentation\Badge;
 use Synchra\Presentation\MessageContent;
 use Synchra\Presentation\Segment;
+use Synchra\Tests\Support\Messages;
 
 #[CoversClass(MessageContent::class)]
 #[CoversClass(Segment::class)]
@@ -137,5 +138,67 @@ final class MessageContentTest extends TestCase
 
         self::assertSame(['kind' => 'emote', 'text' => 'x', 'imageUrl' => 'u', 'animated' => true], $emote->jsonSerialize());
         self::assertSame(['kind' => 'text', 'text' => 'hi'], $text->jsonSerialize());
+    }
+
+    // --- notices -----------------------------------------------------------
+
+    /**
+     * The live shape of a TikTok gift: a notice whose message_parts are empty and whose content is
+     * entirely in notice_message_parts. Reading only message_parts draws these as blank rows.
+     */
+    public function testANoticeCarriesItsContentInTheNoticeParts(): void
+    {
+        $message = Messages::chat([
+            'type' => 'notice',
+            'sub_type' => 'tiktok_gift',
+            'provider' => 'tiktok',
+            'message_parts' => [],
+            'notice_message_parts' => [[
+                'type' => 'gift',
+                'text' => '1 diamond',
+                'gift' => [
+                    'id' => '13651', 'name' => 'Popular Vote', 'type' => 'diamond', 'count' => 1,
+                    'count_display_name' => 'diamond', 'animated' => false,
+                    'image_url' => 'https://p16-webcast.tiktokcdn.com/img/b342e28d.png',
+                ],
+            ]],
+        ]);
+
+        self::assertTrue(MessageContent::isNotice($message));
+
+        $segments = MessageContent::segments(MessageContent::contentParts($message));
+
+        self::assertCount(1, $segments);
+        self::assertSame(Segment::KIND_GIFT, $segments[0]->kind);
+        self::assertSame('https://p16-webcast.tiktokcdn.com/img/b342e28d.png', $segments[0]->imageUrl);
+        // The gift's name, not the part's "1 diamond": this is the alt text for that image.
+        self::assertSame('Popular Vote', $segments[0]->text);
+    }
+
+    public function testAnOrdinaryMessageKeepsUsingItsMessageParts(): void
+    {
+        $message = Messages::chat([
+            'message_parts' => [['type' => 'text', 'text' => 'hello']],
+            'notice_message_parts' => [['type' => 'text', 'text' => 'should not be used']],
+        ]);
+
+        self::assertFalse(MessageContent::isNotice($message));
+        self::assertSame('hello', MessageContent::plainText(MessageContent::contentParts($message)));
+    }
+
+    public function testAMessageWithNeitherKindOfPartHasNoSegments(): void
+    {
+        self::assertSame([], MessageContent::contentParts(Messages::chat()));
+        self::assertSame('', MessageContent::plainText(MessageContent::contentParts(Messages::chat())));
+    }
+
+    public function testAGiftWithoutANameFallsBackToThePartText(): void
+    {
+        $part = ChatMessagePart::fromArray([
+            'type' => 'gift', 'text' => '1 diamond',
+            'gift' => ['id' => 'g', 'name' => '', 'type' => 'diamond', 'count' => 1, 'image_url' => 'https://c/x.png'],
+        ]);
+
+        self::assertSame('1 diamond', MessageContent::segments([$part])[0]->text);
     }
 }

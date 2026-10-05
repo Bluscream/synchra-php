@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Synchra\Presentation;
 
 use Synchra\Enum\ChatMessagePartType;
+use Synchra\Enum\ChatMessageType;
+use Synchra\Model\ChatMessage;
 use Synchra\Model\ChatMessageBadge;
 use Synchra\Model\ChatMessagePart;
 use Synchra\Model\ImageUrls;
@@ -46,6 +48,35 @@ final class MessageContent
         }
 
         return $segments;
+    }
+
+    /**
+     * The parts that actually carry a message's content.
+     *
+     * A chat message puts its content in `message_parts` — except when it is a notice, which puts
+     * everything in `notice_message_parts` and leaves `message_parts` empty. A TikTok gift is the
+     * common case: `type: notice`, `sub_type: tiktok_gift`, and the gift with its image sitting in
+     * the notice parts. A renderer that only reads `message_parts` draws those as blank rows, which
+     * is how an entire category of events quietly disappears from a chat log.
+     *
+     * The two are not seen populated together, so this prefers the message parts and falls back to
+     * the notice ones rather than trying to merge them.
+     *
+     * @return list<ChatMessagePart>
+     */
+    public static function contentParts(ChatMessage $message): array
+    {
+        return $message->message_parts !== [] ? $message->message_parts : $message->notice_message_parts;
+    }
+
+    /**
+     * Whether this message is an event rather than something somebody typed — a gift, a
+     * subscription, a raid. Worth styling differently, and the reason {@see contentParts()} has to
+     * look in two places.
+     */
+    public static function isNotice(ChatMessage $message): bool
+    {
+        return $message->type === ChatMessageType::Notice;
     }
 
     /**
@@ -103,7 +134,12 @@ final class MessageContent
         $gift = $part->gift;
 
         if ($part->type === ChatMessagePartType::Gift && $gift !== null) {
-            return new Segment(Segment::KIND_GIFT, $part->text, $gift->image_url, $gift->animated ?? false);
+            // The gift's name over the part's text: the text is a count ("1 diamond") while the name
+            // is what the image actually shows ("Popular Vote"), and this string is the alt text and
+            // the fallback for a renderer that draws no images.
+            $label = $gift->name !== '' ? $gift->name : $part->text;
+
+            return new Segment(Segment::KIND_GIFT, $label, $gift->image_url, $gift->animated ?? false);
         }
 
         $mention = $part->mention;
